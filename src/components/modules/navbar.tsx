@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
@@ -8,12 +8,13 @@ import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "next-auth/react";
 import { ModeToggle } from "@/components/ModeToggle";
 
-const Navbar = () => {
+const Navbar: FC = () => {
   const pathname = usePathname();
   const { data: session, status } = useSession();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const linkClasses = (href: string) =>
+  // Optional: returns classes for active link
+  const linkClasses = (href: string): string =>
     pathname === href
       ? "text-green-400 font-bold"
       : "hover:text-green-400 transition-colors duration-300";
