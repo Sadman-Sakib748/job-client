@@ -38,7 +38,7 @@ export default function ProductDetailsPage() {
   const [applicantEmail, setApplicantEmail] = useState("");
 
   const { data: product, isLoading } = useSWR<Product>(
-    id ? `http://localhost:5000/items/${id}` : null,
+    id ? `https://backend-server-pink-three.vercel.app/items/${id}` : null,
     fetcher
   );
 
@@ -48,7 +48,7 @@ export default function ProductDetailsPage() {
   const handleDelete = async () => {
     if (!confirm("Are you sure you want to delete this product?")) return;
     try {
-      await fetch(`http://localhost:5000/items/${id}`, { method: "DELETE" });
+      await fetch(`https://backend-server-pink-three.vercel.app/items/${id}`, { method: "DELETE" });
       alert("Product deleted successfully");
       router.push("/");
     } catch (err) {

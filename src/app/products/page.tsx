@@ -92,7 +92,7 @@ function ProductCard({ product }: { product: Product }) {
 
 export default function ProductListPage() {
   const { data: products, isLoading } = useSWR<Product[]>(
-    "http://localhost:5000/items",
+    "https://backend-server-pink-three.vercel.app/items",
     fetcher,
     { revalidateOnFocus: false }
   );

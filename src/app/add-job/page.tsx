@@ -27,7 +27,7 @@ const AddProductPage = () => {
     setMessage("");
 
     try {
-      await axios.post("http://localhost:5000/add", {
+      await axios.post("https://backend-server-pink-three.vercel.app/add", {
         ...formData,
         skills: formData.skills.split(",").map((s) => s.trim()),
         tags: formData.tags.split(",").map((t) => t.trim()),
