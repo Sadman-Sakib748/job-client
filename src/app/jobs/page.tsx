@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { JobHeader } from "../job-header/page";
 
 // Types
 interface Job {
@@ -137,7 +136,6 @@ export default function JobSearchResults() {
   return (
     <div className="bg-white">
       {/* Job Header */}
-      <JobHeader />
 
       <div className="mx-auto max-w-7xl px-4 py-10 md:py-14">
         <div className="mb-6 flex items-baseline justify-between">
