@@ -1,110 +1,114 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import useSWR from "swr";
+import { Badge } from "@/components/ui/badge";
+import { useRouter } from "next/navigation";
 
-// Product interface
 interface Product {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
+  _id: string;
+  id?: string; // mapped later
+  date: string;
+  title: string;
+  payType: "Fixed Project" | "Hourly";
   price: string;
+  summary: string;
+  skills: string[];
+  tags: string[];
+  location: string;
+  client: string;
+  featured?: boolean;
 }
 
-// Fetcher function for SWR
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = (url: string) =>
+  fetch(url)
+    .then(res => res.json())
+    .then(data => Array.isArray(data) ? data.map(item => ({ ...item, id: item._id })) : { ...data, id: data._id });
 
-// Skeleton Card (same design as card but with placeholders)
 const SkeletonCard = () => (
-  <div className="relative bg-white dark:bg-gray-800 rounded-3xl shadow-lg overflow-hidden animate-pulse">
-    {/* Image Placeholder */}
-    <div className="relative w-full h-48 bg-gray-300 dark:bg-gray-700" />
-
-    {/* Content Placeholder */}
-    <div className="px-4 pt-4 pb-6 text-center">
-      <div className="h-5 w-3/4 mx-auto bg-gray-300 dark:bg-gray-700 rounded mb-3" />
-      <div className="h-4 w-1/2 mx-auto bg-gray-300 dark:bg-gray-700 rounded mb-2" />
-      <div className="h-3 w-full mx-auto bg-gray-300 dark:bg-gray-700 rounded mb-2" />
-      <div className="h-3 w-5/6 mx-auto bg-gray-300 dark:bg-gray-700 rounded mb-4" />
-      <div className="h-10 w-full bg-gray-300 dark:bg-gray-700 rounded-xl" />
+  <div className="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm animate-pulse">
+    <div className="h-4 w-1/4 bg-gray-300 rounded mb-2" />
+    <div className="h-6 w-3/4 bg-gray-300 rounded mb-4" />
+    <div className="h-4 w-full bg-gray-300 rounded mb-3" />
+    <div className="flex flex-wrap gap-2 mb-3">
+      <div className="h-5 w-14 bg-gray-300 rounded" />
+      <div className="h-5 w-20 bg-gray-300 rounded" />
     </div>
+    <div className="h-10 w-full bg-gray-300 rounded-xl mt-auto" />
   </div>
 );
 
-const ProductListPage = () => {
-  // useSWR for caching and automatic revalidation
+function ProductCard({ product }: { product: Product }) {
+  const router = useRouter();
+
+  return (
+    <div
+      className={`relative flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all hover:shadow-lg ${
+        product.featured ? "ring-1 ring-slate-900/10" : ""
+      }`}
+    >
+      <div className="text-xs text-slate-500">{product.date}</div>
+      <h3 className="mt-2 text-base font-semibold text-slate-900 md:text-lg">{product.title}</h3>
+      <div className="mt-2 flex flex-wrap items-center gap-2">
+        <Badge className="border-slate-200 bg-slate-50 text-slate-700">{product.payType}</Badge>
+        <Badge className="border-emerald-200 bg-emerald-50 text-emerald-700">{product.price}</Badge>
+        <Badge className="border-violet-200 bg-violet-50 text-violet-700">Verified</Badge>
+      </div>
+      <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">{product.summary}</p>
+
+      <div className="mt-3 flex flex-wrap gap-2">
+        {product.skills.map((skill) => (
+          <Badge key={skill} className="border-slate-200 bg-white text-slate-700">{skill}</Badge>
+        ))}
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        {product.tags.map((tag) => (
+          <Badge key={tag} className="border-slate-200 bg-gray-50 text-slate-700">{tag}</Badge>
+        ))}
+      </div>
+
+      <div className="mt-5 flex items-center justify-between gap-3">
+        <div className="text-xs text-slate-500">
+          <span className="font-medium text-slate-700">{product.location}</span>
+          <span className="mx-2 opacity-40">•</span>
+          {product.client}
+        </div>
+        <button
+          onClick={() => router.push(`/products/${product.id}`)}
+          className="inline-flex items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-800"
+          type="button"
+        >
+          Details
+        </button>
+      </div>
+
+      {product.featured && (
+        <div className="pointer-events-none absolute inset-0 -z-10 rounded-3xl bg-gradient-to-b from-slate-900/[0.02] to-transparent" />
+      )}
+    </div>
+  );
+}
+
+export default function ProductListPage() {
   const { data: products, isLoading } = useSWR<Product[]>(
-    "https://circle-tec.vercel.app/api/items",
+    "http://localhost:5000/items",
     fetcher,
     { revalidateOnFocus: false }
   );
 
   return (
-    <section className="py-16 min-h-screen">
-      {/* Section Heading */}
+    <section className="py-16 bg-white min-h-screen">
       <div className="w-11/12 mx-auto text-center mb-12">
-        <h1 className="text-4xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
-          Our Top Products
-        </h1>
-        <p className="text-gray-700 dark:text-gray-300 text-lg">
-          Explore our selection of high-quality computer products and accessories.
-        </p>
+        <h1 className="text-4xl font-extrabold mb-4 text-slate-900">Our Top Products</h1>
+        <p className="text-gray-700 text-lg">Explore our selection of high-quality computer products.</p>
       </div>
 
-      {/* Grid */}
-      <div className="w-11/12 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+      <div className="w-11/12 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
         {isLoading
-          ? // Show 12 skeletons while loading
-            Array.from({ length: 12 }).map((_, idx) => <SkeletonCard key={idx} />)
-          : // Show products once fetched
-            products?.map((product) => (
-              <div
-                key={product.id}
-                className="relative bg-white dark:bg-gray-800 rounded-3xl shadow-lg hover:shadow-2xl transition-shadow duration-500 overflow-hidden group"
-              >
-                {/* Image */}
-                <div className="relative w-full h-48">
-                  {product.image.startsWith("http") ? (
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      style={{ objectFit: "cover" }}
-                      className="transition-transform duration-500 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-700">
-                      Image not found
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-500" />
-                </div>
-
-                {/* Content */}
-                <div className="px-4 pt-4 pb-6 text-center">
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-                    {product.name}
-                  </h3>
-                  <p className="text-red-600 dark:text-red-400 font-semibold text-md mb-2">
-                    {product.price}
-                  </p>
-                  <p className="text-gray-600 dark:text-gray-300 text-xs mb-4">
-                    {product.description}
-                  </p>
-                  <button
-                    onClick={() => (window.location.href = `/products/${product.id}`)}
-                    className="w-full py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
-                  >
-                    Details
-                  </button>
-                </div>
-              </div>
-            ))}
+          ? Array.from({ length: 12 }).map((_, idx) => <SkeletonCard key={idx} />)
+          : products?.map((product) => <ProductCard key={product.id} product={product} />)}
       </div>
     </section>
   );
-};
-
-export default ProductListPage;
+}

@@ -1,87 +1,213 @@
 "use client";
 
+import { Facebook, Twitter, Instagram } from "lucide-react";
 import Image from "next/image";
+import hand from '../../../public/hand.jpg'
+import logo from '../../../public/logo.png'
+
 
 export default function Footer() {
+
   return (
-    <footer className="bg-[#633daf] dark:bg-black border-t border-gray-200 dark:border-black">
-      <div className="mx-auto w-11/12 px-4 py-10 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-10">
-          {/* Logo & Description */}
-          <div className="flex flex-col items-start space-y-4">
-            <a href="" className="flex items-center space-x-2">
-              <Image
-                src="/footer.png" // replace with your logo path
-                alt="Your Logo"
-                width={80}
-                height={40}
-              />
-              <h1 className="text-3xl font-bold text-white">CIRCLE TEC</h1>
-            </a>
-            <p className="text-white dark:text-white max-w-xs">
-              Building awesome products that make your life easier. Stay connected with us!
+    <footer className="bg-[#071400] text-white py-16 px-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Main heading */}
+        <div className="flex  flex-col md:flex-row justify-between items-start gap-6 mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold md:w-1/2">
+            Reach Your Requirement Goals Right on Schedule
+          </h2>
+          <div className="flex-1 md:w-1/2">
+            <p className="text-green-100 max-w-2xl text-pretty">
+              Sign up, complete your profile, and start browsing projects. Submit
+              proposals and connect with clients to get hired.
             </p>
+            <button className="mt-6 bg-[#05AF2B] text-white px-8 py-3 rounded-full font-semibold hover:bg-green-400 transition-colors">
+              Get Started
+            </button>
           </div>
+        </div>
 
-          {/* Links */}
-          
-            <div>
-              <h3 className="text-white dark:text-white font-semibold mb-4 uppercase text-sm">
-                Products
-              </h3>
-              <ul className="text-white  space-y-2 text-sm">
-                <li><a href="#" className="hover:underline">App</a></li>
-                <li><a href="#" className="hover:underline">Features</a></li>
-                <li><a href="#" className="hover:underline">Pricing</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-white dark:text-white font-semibold mb-4 uppercase text-sm">
-                Company
-              </h3>
-              <ul className="text-white  space-y-2 text-sm">
-                <li><a href="#" className="hover:underline">About Us</a></li>
-                <li><a href="#" className="hover:underline">Careers</a></li>
-                <li><a href="#" className="hover:underline">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-white dark:text-white font-semibold mb-4 uppercase text-sm">
-                Legal
-              </h3>
-              <ul className="text-white  space-y-2 text-sm">
-                <li><a href="#" className="hover:underline">Privacy Policy</a></li>
-                <li><a href="#" className="hover:underline">Terms & Conditions</a></li>
-                <li><a href="#" className="hover:underline">Cookie Policy</a></li>
-              </ul>
+        {/* Footer content grid */}
+        <div className="grid grid-cols-1 h-[300px] md:grid-cols-2 lg:grid-cols-4 pt-12">
+          {/* Company Info */}
+          <div className="border-t border-white/6 p-6 text-center">
+            <div className="space-y-4">
+              <div className="flex flex-col items-center space-y-2">
+                <Image
+                    src={logo}
+                    alt="Unveils the Best Canadian Cities for Biking"
+                    width={100}
+                    height={70}
+                    className="rounded-lg h-[58px] w-[247px] object-cover"
+                  />
+              </div>
             </div>
           </div>
 
-          <div/>
+          {/* About Links */}
+          <div className="border-t border-white/6 p-6 text-center">
+            <h4 className="font-semibold text-lg text-white">About</h4>
+            <ul className="space-y-2 text-sm mt-4 gap-6">
+              <li>
+                <a href="#" className="text-green-200 hover:text-green-400 transition-colors">
+                  Company
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-green-200 hover:text-green-400 transition-colors">
+                  Become Seller
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-green-200 hover:text-green-400 transition-colors">
+                  Registered
+                </a>
+              </li>
+            </ul>
+          </div>
 
-            <div className="mt-10 border-t border-gray-200 dark:border-gray-700 pt-6 flex flex-col md:flex-row md:justify-between items-center">
-          <p className="text-white dark:text-white text-sm">
-            &copy; {new Date().getFullYear()} YourBrand. All rights reserved.
+          {/* Categories */}
+          <div className="border border-white/6 p-6 text-center">
+            <h4 className="font-semibold text-lg text-white">Categories</h4>
+            <ul className="space-y-2 mt-4 text-sm">
+              <li>
+                <a href="#" className="text-green-200 hover:text-green-400 transition-colors">
+                  Digital & Creative
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-green-200 hover:text-green-400 transition-colors">
+                  Development & IT
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-green-200 hover:text-green-400 transition-colors">
+                  Music & Audio
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-green-200 hover:text-green-400 transition-colors">
+                  Programming & Tech
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Support */}
+          <div className="border-t border-b border-white/6 p-6 text-center">
+            <h4 className="font-semibold text-lg text-white">Support</h4>
+            <ul className="space-y-2 mt-4 text-sm">
+              <li>
+                <a href="#" className="text-green-200 hover:text-green-400 transition-colors">
+                  Help & Support
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-green-200 hover:text-green-400 transition-colors">
+                  FAQ
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-green-200 hover:text-green-400 transition-colors">
+                  Contact Us
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-green-200 hover:text-green-400 transition-colors">
+                  Terms & Services
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
+
+
+
+
+        {/* Popular Posts Section */}
+        <div className="mt-12 pt-8 flex flex-col md:flex-row md:justify-between md:items-start gap-8">
+          {/* Social Icons */}
+          <div className="flex-1 flex flex-col md:flex-row md:items-center md:space-x-4 space-y-4 md:space-y-0">
+            <a
+              href="#"
+              className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-400 transition-colors"
+            >
+              <Facebook className="w-5 h-5 text-white" />
+            </a>
+            <a
+              href="#"
+              className="w-10 h-10 bg-green-700 rounded-full flex items-center justify-center hover:bg-green-500 transition-colors"
+            >
+              <Instagram className="w-5 h-5 text-white" />
+            </a>
+            <a
+              href="#"
+              className="w-10 h-10 bg-green-700 rounded-full flex items-center justify-center hover:bg-green-500 transition-colors"
+            >
+              <Twitter className="w-5 h-5 text-white" />
+            </a>
+          </div>
+
+          {/* Popular Posts */}
+          <div className="flex-1">
+            <div className="">
+              <h4 className="font-semibold text-lg mb-6 text-white">Our Popular Post</h4>
+            </div>
+
+            {/* Posts Container */}
+            <div className="flex   md:gap-[18px] gap-[18px]">
+              {/* Post 1 */}
+              <div className="flex items-center cursor-pointer group w-[299px] h-[72px] opacity-100 transform rotate-0">
+                <div className="flex-shrink-0">
+                  <Image
+                    src={hand}
+                    alt="Unveils the Best Canadian Cities for Biking"
+                    width={72}
+                    height={50}
+                    className="rounded-lg h-[72px] w-[106px] object-cover"
+                  />
+                </div>
+
+                <div className="flex-1 min-w-0 ml-4">
+                  <p className="text-xs text-green-200 mb-1">November 7, 2024</p>
+                  <h5 className="font-semibold text-sm text-white group-hover:text-green-400 transition-colors">
+                    Unveils the Best Canadian Cities for Biking
+                  </h5>
+                </div>
+              </div>
+
+              {/* Post 2 */}
+              <div className="flex items-center cursor-pointer group w-[299px] h-[72px] opacity-100 transform rotate-0">
+                <div className="flex-shrink-0">
+                  <Image
+                    src={hand}
+                    alt="Unveils the Best Canadian Cities for Biking"
+                    width={100}
+                    height={70}
+                    className="rounded-lg h-[72px] w-[106px] object-cover"
+                  />
+                </div>
+                <div className="flex-1 min-w-0 ml-4">
+                  <p className="text-xs text-green-200 mb-1">November 7, 2024</p>
+                  <h5 className="font-semibold text-sm text-white group-hover:text-green-400 transition-colors">
+                    Unveils the Best Canadian Cities for Biking
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Bottom section with social links and copyright */}
+        <div className="mt-12 pt-8 border-t 
+ border-white/6 text-center items-center space-y-4 md:space-y-0">
+          <p className="text-sm text-green-200">
+            © QuantumEdge Software Pvt. 2024. All rights reserved.
           </p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            {/* Social Icons */}
-            <a href="#" className="text-white dark:text-white hover:text-gray-900 dark:hover:text-white">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M22.46 6c-.77.35-1.5.59-2.24.69.81-.48 1.43-1.23 1.72-2.13-.75.44-1.58.76-2.46.93a4.18 4.18 0 0 0-7.14 3.8A11.85 11.85 0 0 1 3.2 4.78a4.17 4.17 0 0 0 1.29 5.57c-.67-.02-1.3-.2-1.85-.5v.05a4.18 4.18 0 0 0 3.36 4.09c-.32.09-.66.13-1 .13-.25 0-.5-.02-.74-.07a4.18 4.18 0 0 0 3.9 2.9A8.37 8.37 0 0 1 2 19.54a11.8 11.8 0 0 0 6.29 1.84c7.55 0 11.68-6.25 11.68-11.66v-.53A8.36 8.36 0 0 0 24 5.1a8.29 8.29 0 0 1-2.36.65 4.16 4.16 0 0 0 1.82-2.3z" />
-              </svg>
-            </a>
-            <a href="#" className="text-white dark:text-white hover:text-gray-900 dark:hover:text-white">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 4.41 2.87 8.15 6.84 9.48v-6.71H9.06V12h2.78v-2.07c0-2.76 1.64-4.27 4.14-4.27 1.2 0 2.44.22 2.44.22v2.68h-1.37c-1.35 0-1.77.84-1.77 1.7V12h3l-.48 2.77h-2.52v6.71c3.97-1.33 6.84-5.07 6.84-9.48 0-5.5-4.46-9.96-9.96-9.96z"/>
-              </svg>
-            </a>
-          </div>
         </div>
-        </div>
-
-        {/* Bottom */}
-      
-      
+      </div>
     </footer>
   );
 }

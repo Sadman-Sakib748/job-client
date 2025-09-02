@@ -1,14 +1,10 @@
-import Hero from "@/components/modules/hero";
-import ProductHighlights from "@/components/modules/ProductHighlights";
-
-
+import Login from "@/components/modules/Login";
 
 
 export default function Home() {
   return (
     <div>
- <Hero></Hero>
- <ProductHighlights></ProductHighlights>
+      <Login />
     </div>
   );
 }

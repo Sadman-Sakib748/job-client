@@ -6,12 +6,18 @@ import Swal from "sweetalert2";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import Image from "next/image";
+import { Eye, EyeOff, X } from "lucide-react"; // ✅ Icons import
+import loginImg from "../../../../public/login.jpg"; // import image
 
 export default function Register() {
   const router = useRouter();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // ✅ Added
+  const [rememberMe, setRememberMe] = useState(false); // ✅ Added
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,83 +53,141 @@ export default function Register() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <Card className="w-full max-w-md shadow-lg">
-        <CardHeader>
-          <CardTitle className="text-2xl text-center">Create Account</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            <div>
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                placeholder="Your Name"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                required
-              />
-            </div>
-            <div>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                type="email"
-                id="email"
-                placeholder="you@example.com"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                required
-              />
-            </div>
-            <div>
-              <Label htmlFor="password">Password</Label>
-              <Input
-                type="password"
-                id="password"
-                placeholder="Password"
-                value={form.password}
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-                required
-              />
-            </div>
-            <Button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center"
-            >
-              {loading ? (
-                <svg
-                  className="animate-spin h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+      <Card className="w-full max-w-5xl bg-[#071400] rounded-3xl shadow-2xl overflow-hidden relative">
+        {/* Close Button - Top Right */}
+        <button className="absolute top-4 right-4 text-white/70 p-2">
+          <X size={20} />
+        </button>
+
+        <div className="flex">
+          {/* Left Panel - Register Form */}
+          <div className="w-1/2 bg-[#071400] p-12 flex items-center">
+            <div className="max-w-[400px] mx-auto">
+              <h1 className="text-3xl font-bold text-white mb-2">
+                Create your account
+              </h1>
+              <p className="text-green-200 text-sm mb-8">
+                Already have an account?{" "}
+                <span
+                  onClick={() => router.push("/auth/login")}
+                  className="text-green-400 cursor-pointer hover:underline"
                 >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                  ></path>
-                </svg>
-              ) : (
-                "Register"
-              )}
-            </Button>
-          </form>
-          <p className="text-sm text-center mt-4">
-            Already have an account?{" "}
-            <a href="/auth/login" className="text-blue-500 hover:underline">
-              Login
-            </a>
-          </p>
-        </CardContent>
+                  Login
+                </span>
+              </p>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Name Field */}
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="name"
+                    className="text-white text-sm font-medium"
+                  >
+                    Full Name
+                  </Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    value={form.name}
+                    onChange={(e) =>
+                      setForm({ ...form, name: e.target.value })
+                    }
+                    className="bg-green-800/30 border-green-700 text-white placeholder:text-green-300 focus:border-green-500 focus:ring-green-500"
+                    placeholder="Enter your name"
+                    required
+                  />
+                </div>
+
+                {/* Email Field */}
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="email"
+                    className="text-white text-sm font-medium"
+                  >
+                    Email Address
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={form.email}
+                    onChange={(e) =>
+                      setForm({ ...form, email: e.target.value })
+                    }
+                    className="bg-green-800/30 border-green-700 text-white placeholder:text-green-300 focus:border-green-500 focus:ring-green-500"
+                    placeholder="Enter your email"
+                    required
+                  />
+                </div>
+
+                {/* Password Field */}
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="password"
+                    className="text-white text-sm font-medium"
+                  >
+                    Password
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      value={form.password}
+                      onChange={(e) =>
+                        setForm({ ...form, password: e.target.value })
+                      }
+                      className="bg-green-800/30 border-green-700 text-white placeholder:text-green-300 focus:border-green-500 focus:ring-green-500 pr-10"
+                      placeholder="Password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-green-300 hover:text-white"
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Remember Me */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="remember"
+                    checked={rememberMe}
+                    onCheckedChange={setRememberMe}
+                    className="border-green-600 data-[state=checked]:bg-green-600"
+                  />
+                  <Label
+                    htmlFor="remember"
+                    className="text-green-200 text-sm"
+                  >
+                    Remember Me
+                  </Label>
+                </div>
+
+                {/* Register Button */}
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-lg transition-colors"
+                >
+                  {loading ? "Creating..." : "Register Now"}
+                </Button>
+              </form>
+            </div>
+          </div>
+
+          {/* Right Panel - Image */}
+          <div className="w-1/2">
+            <Image
+              src={loginImg}
+              alt="Professional team collaborating in modern office"
+              className="object-cover h-full w-full rounded-tr-3xl rounded-br-3xl"
+              priority
+            />
+          </div>
+        </div>
       </Card>
     </div>
   );

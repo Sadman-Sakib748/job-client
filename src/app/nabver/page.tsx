@@ -13,6 +13,9 @@ const Navbar = () => {
   const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
+  // Only "Add Job" link now
+  const links = [{ name: "Add Job", href: "/job-add" }];
+
   const linkClasses = (href: string) =>
     pathname === href
       ? "text-green-400 font-bold"
@@ -21,24 +24,31 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 backdrop-blur-sm bg-green-900/90 text-white border-b border-green-800">
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-3">
-        {/* Logo + Freelancer */}
-        <div className="flex items-center gap-4">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-              <div className="w-4 h-4 bg-white rounded-full" />
-            </div>
-            <span className="text-lg font-semibold">QUANTUMEDGE SOFTWARE</span>
-          </Link>
-
-          {/* Freelancer Dropdown */}
-          <div className="flex items-center gap-1 cursor-pointer text-sm text-white">
-            <span>Freelancer</span>
-            <ChevronDown className="w-4 h-4" />
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+            <div className="w-4 h-4 bg-white rounded-full" />
           </div>
-        </div>
+          <span className="text-lg font-semibold">QUANTUMEDGE SOFTWARE</span>
+        </Link>
+
+        {/* Desktop Menu */}
+        <nav className="hidden md:flex items-center gap-8">
+          {links.map((link) => (
+            <Link key={link.name} href={link.href} className={linkClasses(link.href)}>
+              {link.name}
+            </Link>
+          ))}
+        </nav>
 
         {/* Desktop Right Section */}
         <div className="hidden md:flex items-center gap-4">
+          {/* Freelancer Dropdown */}
+          <div className="flex items-center gap-1 cursor-pointer text-sm">
+            <span>Freelancer</span>
+            <ChevronDown className="w-4 h-4" />
+          </div>
+
           {/* Become a Seller Button */}
           <Button
             variant="outline"
@@ -89,8 +99,21 @@ const Navbar = () => {
       {/* Mobile Dropdown */}
       {isOpen && (
         <div className="md:hidden bg-green-950 border-t border-green-800 px-6 py-4 space-y-4">
+          <nav className="flex flex-col gap-3 font-medium">
+            {links.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className={linkClasses(link.href)}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </nav>
+
           <div className="flex flex-col gap-3 items-center">
-            {/* Freelancer Dropdown */}
+            {/* Freelancer Dropdown (Mobile) */}
             <div className="flex items-center gap-1 cursor-pointer text-sm text-green-300">
               <span>Freelancer</span>
               <ChevronDown className="w-4 h-4" />
@@ -128,7 +151,7 @@ const Navbar = () => {
               </>
             )}
 
-            {/* Become Seller Button */}
+            {/* Become Seller Button (Mobile) */}
             <Button
               variant="outline"
               size="sm"
