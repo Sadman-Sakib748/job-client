@@ -81,28 +81,6 @@ async function addJob(newJob: Job) {
   }
 }
 
-// Local JobNavbar
-function JobNavbar() {
-  return (
-    <div className="w-full border-b border-slate-200 bg-white px-6 py-3 shadow-sm">
-      <div className="mx-auto max-w-7xl flex items-center justify-between">
-        <h1 className="text-lg font-bold text-slate-900">Job Board</h1>
-        <nav className="flex gap-4">
-          <a href="#" className="text-sm font-medium text-slate-700 hover:text-slate-900">
-            Home
-          </a>
-          <a href="#" className="text-sm font-medium text-slate-700 hover:text-slate-900">
-            Browse Jobs
-          </a>
-          <a href="#" className="text-sm font-medium text-slate-700 hover:text-slate-900">
-            About
-          </a>
-        </nav>
-      </div>
-    </div>
-  );
-}
-
 function JobCard({ job }: { job: Job }) {
   return (
     <div
@@ -158,7 +136,7 @@ export default function JobSearchResults() {
 
   return (
     <div className="bg-white">
-      {/* Local JobNavbar */}
+      {/* Job Header */}
       <JobHeader />
 
       <div className="mx-auto max-w-7xl px-4 py-10 md:py-14">
